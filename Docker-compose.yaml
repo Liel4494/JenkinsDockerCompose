@@ -23,6 +23,7 @@ services:
 
   jenkins-slave:
     image: jenkins/inbound-agent:latest
+    entrypoint: ["/usr/local/bin/jenkins-agent"]
     container_name: jenkins-slave
     restart: unless-stopped
     privileged: true
