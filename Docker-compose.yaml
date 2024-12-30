@@ -1,0 +1,38 @@
+version: '3.8'
+
+networks:
+  jenkins-net:
+    internal: true
+
+services:
+  jenkins-master:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-master
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    networks:
+      - default
+      - jenkins-net
+    volumes:
+      - /var/jenkins_master:/var/jenkins_home
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=true
+
+  jenkins-slave:
+    image: jenkins/inbound-agent:latest
+    container_name: jenkins-slave
+    restart: unless-stopped
+    privileged: true
+    depends_on:
+      - jenkins-master
+    networks:
+      - jenkins-net
+    volumes:
+      - /var/slave_workspace:/home/jenkins/agent
+    environment:
+      - JENKINS_URL=http://jenkins-master:8080
+      - JENKINS_AGENT_NAME=jenkins-slave
+      - JENKINS_SECRET=<Slave_TOKEN>
