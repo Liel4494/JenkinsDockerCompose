@@ -15,7 +15,17 @@ node("jenkins-slave"){
         sh returnStdout: true, script: './configure --with-openssl'
         sh returnStdout: true, script: 'make'
         sh returnStdout: true, script: 'make install'        
-        sh returnStdout: true, script: 'ls -la'
+        dir("src"){
+            def curlOutput = sh(returnStdout: true, script: './curl --version')
+            echo "Curl Output:\n${curlOutput}"            
+        }
+        
+    }    
+}
+
+node("jenkins-slave"){
+    stage("Test Curl"){
+        sh returnStdout: true, script: 'make test'
     }    
 }
 
