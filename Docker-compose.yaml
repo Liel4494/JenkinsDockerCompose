@@ -24,6 +24,7 @@ services:
   jenkins-slave:
     image: omc-agent/inbound-agent:latest #jenkins/inbound-agent:latest
     entrypoint: ["/usr/local/bin/jenkins-agent"]
+    user: root
     container_name: jenkins-slave
     restart: unless-stopped
     privileged: true
