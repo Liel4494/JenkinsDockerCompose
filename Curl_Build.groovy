@@ -31,7 +31,7 @@ node("jenkins-slave"){
     
     stage("Archive Curl"){
         echo "\n## Archiving Curl Binary ##"
-        archiveArtifacts artifacts: './src/curl', followSymlinks: false
+        archiveArtifacts artifacts: 'src/curl', followSymlinks: false
     }    
 }
 
