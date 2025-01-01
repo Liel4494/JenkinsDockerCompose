@@ -11,6 +11,8 @@ node("jenkins-master"){
 node("jenkins-slave"){
     stage("Build Curl"){
         unstash 'curl-repo'
+        
+        echo "\n## Building Curl ##"
         sh returnStdout: true, script: 'autoreconf -fi'
         sh returnStdout: true, script: './configure --with-openssl'
         sh returnStdout: true, script: 'make'
@@ -20,12 +22,17 @@ node("jenkins-slave"){
             echo "Curl Output:\n${curlOutput}"            
         }
         
+    }
+    
+    stage("Test Curl"){
+        echo "\n## Running Tests ##"
+        sh returnStdout: true, script: 'make test'
+    }      
+    
+    stage("Archive Curl"){
+        echo "\n## Archiving Curl Binary ##"
+        archiveArtifacts artifacts: './src/curl', followSymlinks: false
     }    
 }
 
-node("jenkins-slave"){
-    stage("Test Curl"){
-        sh returnStdout: true, script: 'make test'
-    }    
-}
 
