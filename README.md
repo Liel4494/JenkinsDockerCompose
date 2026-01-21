@@ -23,6 +23,7 @@
  3. Create `jenkins_home` folder:
  ```
 sudo mkdir /var/jenkins_home
+sudo mkdir /var/jenkins_master
 sudo chmod -R  777 /var/jenkins_home
 sudo chown -R 1000:1000 /var/jenkins_master
 
