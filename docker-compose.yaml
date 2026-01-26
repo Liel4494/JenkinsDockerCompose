@@ -35,6 +35,6 @@ services:
     volumes:
       - /var/slave_workspace:/home/jenkins/agent
     environment:
-      - JENKINS_URL=https://jenkins-master:433
+      - JENKINS_URL=https://jenkins-master:8433
       - JENKINS_AGENT_NAME=jenkins-slave
       - JENKINS_SECRET=Aa123456
